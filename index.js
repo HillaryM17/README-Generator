@@ -3,7 +3,18 @@ const path = require('path');
 const inquirer = require("inquirer");
 const generateMarkdown = require("./utils/generateMarkdown");
 
+// function licenseBadge(answers){ 
+//     let license = ""
+//     if (answers.license == "Apache 2.0"){
+//         license = "[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)";
+//     }
+//     else 
+//     (license = "BADGE");
+// return license
+// }
+
 // array of questions for user
+
 const questions = [
 {
     type: "input",
@@ -43,21 +54,33 @@ const questions = [
 }, 
 {
     type: "input",
-    name: "questions",
-    message: "Please list any questions"}
+    name: "gitHub",
+    message: "Please enter your GitHub username"
+},
+{
+    type: "input",
+    name: "email",
+    message: "Please enter your email address"
+}
 ];
 
-inquirer.prompt (questions)
+const promptUser = () => inquirer.prompt (questions) 
+//.then((answers) => licenseBadge(answers))
+.then ((answers) => generateMarkdown(answers))
+.then ((response) => writeToFile("README1.md", response))
+.then(() => console.log('Successfully wrote to README1.md'))
+.catch((err) => console.error(err));
 
 
 // function to write README file
-function writeToFile(fileName, data) {
-  
-}
+function writeToFile(filename, data) {
+fs.writeFile(filename,data,(err) =>
+err ? console.log(err) : console.log('Success!')
+)};
 
 // function to initialize program
 function init() {
-
+promptUser(questions)
 }
 
 // function call to initialize program
