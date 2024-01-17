@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require('path');
 const inquirer = require("inquirer");
 const generateMarkdown = require("./utils/generateMarkdown");
+let licenseBadge = require("./utils/generateMarkdown")
 
 // function licenseBadge(answers){ 
 //     let license = ""
@@ -66,7 +67,7 @@ const questions = [
 
 const promptUser = () => inquirer.prompt (questions) 
 //.then((answers) => licenseBadge(answers))
-.then ((answers) => generateMarkdown(answers))
+.then ((answers) => generateMarkdown(licenseBadge(),answers))
 .then ((response) => writeToFile("README1.md", response))
 .then(() => console.log('Successfully wrote to README1.md'))
 .catch((err) => console.error(err));
