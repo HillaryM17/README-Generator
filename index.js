@@ -2,17 +2,7 @@ const fs = require("fs");
 const path = require('path');
 const inquirer = require("inquirer");
 const generateMarkdown = require("./utils/generateMarkdown");
-let licenseBadge = require("./utils/generateMarkdown")
 
-// function licenseBadge(answers){ 
-//     let license = ""
-//     if (answers.license == "Apache 2.0"){
-//         license = "[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)";
-//     }
-//     else 
-//     (license = "BADGE");
-// return license
-// }
 
 // array of questions for user
 
@@ -65,10 +55,10 @@ const questions = [
 }
 ];
 
-const promptUser = () => inquirer.prompt (questions) 
-//.then((answers) => licenseBadge(answers))
-.then ((answers) => generateMarkdown(licenseBadge(),answers))
-.then ((response) => writeToFile("README1.md", response))
+const promptUser = () => inquirer.prompt(questions) 
+.then((answers) => {
+    const markdown = generateMarkdown(answers);
+    return writeToFile("README1.md", markdown)})
 .then(() => console.log('Successfully wrote to README1.md'))
 .catch((err) => console.error(err));
 
